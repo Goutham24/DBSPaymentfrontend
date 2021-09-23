@@ -1,0 +1,275 @@
+<div class="container">
+  <form>
+      <h1 class="text-center text-uppercase">Trasnfer Money</h1>
+      <h3 class="Right">Date &nbsp;: &nbsp;{{getDate()}}</h3>
+      <hr id="hr" />
+      <div class="row">
+            <div class="Right col-md-3 mt-2">
+              <h5>CustomerID</h5>
+            </div>
+            <div class="inpt col-md-3  mt-2">
+              <input type="text" readonly="" class=" form-control-plaintext inpt" id="customerid" value="{{getCustomer().customerid}}" />
+            </div>    
+            <div class="col-md-3 mt-2 Right">
+              <h5><label for="ReceiverName">Receiver Name</label></h5>
+            </div>
+            <div class="col-md-3 mt-2">
+              <input type="text"  class=" form-control-plaintext inpt" id="ReceiverName"  autocomplete="on" required
+              name="receivername"  [(ngModel)]="receivername" (change)="processSDN()" placeholder="  Receiver Name"   />
+            </div> 
+      </div>
+      <div class="row">
+        <div class="col-md-3 mt-5 Right">
+          <h5>CustomerName</h5>
+        </div>
+        <div class="col-md-3  mt-5 ">
+          <input type="text" readonly="" class=" form-control-plaintext inpt" id="CustomerName" value="{{ getCustomer().accountholdername}}" />
+        </div>    
+        <div class="col-md-3 mt-5 Right">
+          <h5><label for="ReceiverAccountNumber">Receiver Account Number</label></h5>
+        </div>
+        <div class="col-md-3 mt-5">
+          <input type="number"  class=" form-control-plaintext inpt" id="ReceiverAccountNumber"  autocomplete="on" required
+          [(ngModel)]="receiveraccountnumber" name="receiveraccountnumber" placeholder="  Receiver Account Number" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 mt-5 Right">
+          <h5>ClearBalance</h5>
+        </div>
+        <div class="col-md-3 mt-5 ">
+          <input type="text" readonly="" class=" form-control-plaintext inpt" id="ClearBalance" value="{{ getCustomer().clearbalance}}" />
+        </div>    
+        <div class="col-md-3 mt-5 Right">
+          <h5><label for="Message">Message</label></h5>
+        </div>
+        <div class="col-md-3 mt-5">
+          <select class="form-select" id="transfertype" (change)="onMessageChange(selected)" #selected>
+            <option value="">select message</option>
+            <option *ngFor="let msg of message">{{msg.messageCode}}</option>
+        </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 mt-5 Right">
+          <h5>Currency</h5>
+        </div>
+        <div class="col-md-3 mt-5 ">
+          <input type="text" readonly="" class=" form-control-plaintext inpt" id="Currency" value="{{ currency.currencyCode}}" />
+        </div>    
+        <div class="col-md-3 mt-5 Right">
+          <h5><label for="transfertype">Transfer Type</label></h5>
+        </div>
+        <div class="col-md-3 mt-5" *ngIf="iscustomer(); else bk">
+          <select class="form-select" [(ngModel)]="transfertypes.transferTypeCode" name="transfertypecode" id="transfertype">
+            <option>Select Transfer</option>
+            <option value="C">Cutomer to customer</option>
+          </select>
+        </div>
+        <ng-template #bk>
+          <div class="col-md-3 mt-5">
+            <select class="form-select" [(ngModel)]="transfertypes.transferTypeCode" name="transfertypecode" id="transfertype">
+              <option>Select Transfer</option>
+              <option value="B">Bank to Bank</option>
+            </select>
+          </div>
+        </ng-template>
+      </div>
+      <div class="row">
+        <div class="col-md-3 mt-5 Right">
+          <h5><label for="ReceiverBIC">ReceiverBIC</label></h5>
+        </div>
+        <div class="col-md-3 mt-5 ">
+          <input type="text"  class=" form-control-plaintext inpt" id="ReceiverBIC"  autocomplete="on" required
+           [(ngModel)]="bank.bic" (change)="getBic()" name="bic" placeholder="  Enter Receiver BIC" />
+        </div>    
+        <div class="col-md-3 mt-5 Right">
+          <h5><label for="Amount">Amount</label></h5>
+        </div>
+        <div class="col-md-3 mt-5">
+          <input type="number"  class=" form-control-plaintext inpt" id="Amount"  autocomplete="off"  required
+          [(ngModel)]="amount" name="amount" placeholder="  Amount" (keyup)="onAmountChange()" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 mt-5 Right">
+          <h5><label for="Receiver Bank">Receiver BankName</label></h5>
+        </div>
+        <div class="col-md-3 mt-5 ">
+          <input type="text"  class=" form-control-plaintext inpt" id="Receiver Bank" readonly=""  
+           required (change)="getBic()" name="bic" placeholder=" Receiver Instituton name" value="  {{bankname.bankname}}" />
+        </div>    
+        <div class="col-md-3 mt-5 Right">
+          <h5><label for="Transferfee">Transferfee</label></h5>
+        </div>
+        <div class="col-md-3 mt-5">
+          <input type="number"  readonly="" class=" form-control-plaintext inpt" id="Transferfee"  autocomplete="off"  required
+          [(ngModel)]="transferfee"  name="transferfee" placeholder="Transferfee" />
+        </div>
+      </div>
+      <div class="text-center">
+        <button class ="btn btn-dark btn-lg  mt-5" (click)="handleTransfer()" data-bs-toggle="modal" data-bs-target="#exampleModal">Intiate Transaction</button>
+      </div>
+      
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Alert</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              {{alertmsg}}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-info"  data-bs-dismiss="modal">ok</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+</div>
+
+
+<!-- <p>Receivername:{{receivername|json}}</p>
+<p>{{receiveraccountnumber}}</p>
+<p>{{amount}}</p>
+<p>{{transferfee}}</p>
+<p>{{selectedMsgCode}}</p>
+<p>{{transfertypes.transferTypeCode}}</p> -->
+
+
+
+<!-- <div class="container">
+  <form>
+      <legend>Trasnfer Money</legend>
+      <div class="form-group row">
+          <label for="Date" class="col-sm-2 col-form-label"><b>Date</b></label>
+          <div class="col-sm-4">
+            <input type="text" readonly="" class="form-control-plaintext" id="Date" value="{{ getDate()}}">
+          </div>
+        </div>
+      <hr>
+      <fieldset>
+          <div class="form-group row">
+            <label for="customerid" class="col-sm-2 col-form-label"><b>CustomerID</b></label>
+            <div class="col-sm-4">
+              <input type="text" readonly="" class="form-control-plaintext" id="customerid" value="  {{ getCustomer().customerid}}">
+            </div>
+          </div>
+          <div class="form-group row">
+              <label for="customername" class="col-sm-2 col-form-label"><b>CustomerName</b></label>
+              <div class="col-sm-4">
+                <input type="text" readonly="" class="form-control-plaintext" id="customername" value="  {{ getCustomer().accountholdername}}">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="ClearBalance" class="col-sm-2 col-form-label"><b>ClearBalance</b></label>
+              <div class="col-sm-4">
+                <input type="text" readonly="" class="form-control-plaintext" id="ClearBalance" value="  {{ getCustomer().clearbalance}}">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="currency" class="col-sm-2 col-form-label"><b>Currency</b></label>
+              <div class="col-sm-4">
+                <input type="text" readonly="" class="form-control-plaintext" id="currency" value="  INR">
+              </div>
+            </div>
+          <div class="form-group row">
+            <label for="ReceiverBIC" class="col-sm-2 col-form-label">ReceiverBIC</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control-plaintext mt-1" id="ReceiverBIC" [(ngModel)]="bank.bic" (change)="getBic()" name="bic" placeholder="  Enter Receiver BIC">
+            </div>
+          </div>
+          <div class="form-group row">
+              <label for="currency" class="col-sm-2 col-form-label"><b>Receiver Instituton name</b></label>
+              <div class="col-sm-4">
+                <input type="text" readonly=""  class="form-control-plaintext" id="currency" value="  {{bankname.bankname}}">
+              </div>
+            </div>
+          <div class="form-group row">
+              <label for="ReceiverName" class="col-sm-2 col-form-label">Receiver Name</label>
+              <div class="col-sm-4">
+                  <input type="text" class="form-control-plaintext mt-1" id="ReceiverName" 
+                  name="receivername"  [(ngModel)]="receivername" (change)="processSDN()" placeholder="  Enter Receiver Name"  required>
+              </div>
+          </div>
+          <div class="form-group row">
+              <label for="ReceiverAccountNumber" class="col-sm-2 col-form-label">Receiver Account Number</label>
+              <div class="col-sm-4">
+                  <input type="text" class="form-control-plaintext mt-1" id="ReceiverAccountNumber" 
+                  [(ngModel)]="receiveraccountnumber" name="receiveraccountnumber" placeholder="  Receiver Account Number" required>
+              </div>
+          </div>
+          <div class="form-group row">
+            <label for="transfertype" class="form-label mt-2">Message</label>
+            <div class="col-sm-4">
+              <select class="form-select" id="transfertype" (change)="onMessageChange(selected)" #selected>
+                  <option value="">select message</option>
+                  <option *ngFor="let msg of message">{{msg.messageCode}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row" *ngIf="iscustomer(); else bk">
+            <label for="transfertype" class="form-label mt-2">Transfer Type</label>
+            <div class="col-sm-4">
+              <select class="form-select" [(ngModel)]="transfertypes.transferTypeCode" name="transfertypecode" id="transfertype">
+                  <option>Select Transfer</option>
+                  <option>C</option>
+              </select>
+            </div> 
+          </div>
+          <ng-template #bk>
+            <div class="form-group row">
+              <label for="transfertype" class="form-label mt-2">Transfer Type</label>
+              <div class="col-sm-4">
+                <select class="form-select" [(ngModel)]="transfertypes.transferTypeCode" name="transfertypecode" id="transfertype">
+                    <option>Select Transfer</option>
+                    <option>B</option>
+                </select>
+              </div> 
+            </div>
+          </ng-template>
+            <div class="form-group row">
+              <label for="Amount" class="col-sm-2 col-form-label mt-2">Amount</label>
+              <div class="col-sm-4">
+                  <input type="text" class="form-control-plaintext mt-2" id="Amount" 
+                  [(ngModel)]="amount" name="amount" placeholder="  Amount" (keyup)="onAmountChange()" autocomplete="off">
+              </div>
+          </div>
+          <div class="form-group row">
+              <label for="Transferfee" class="col-sm-2 col-form-label">Transferfee</label>
+              <div class="col-sm-4">
+                  <input type="text" readonly="" class="form-control-plaintext mt-1" id="Transferfee"
+                  [(ngModel)]="transferfee"  name="transferfee" placeholder="Transferfee" >
+              </div>
+          </div>
+          <button class ="btn btn-primary btn-lg" (click)="handleTransfer()" data-bs-toggle="modal" data-bs-target="#exampleModal">Intiate Transaction</button>
+        
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  {{alertmsg}}
+                </div>
+                <div class="modal-footer">
+                  
+                  <button type="button" class="btn btn-danger"  data-bs-dismiss="modal">ok</button>
+                </div>
+              </div>
+            </div>
+          </div>
+      </fieldset>
+  </form>
+</div>
+
+<p>Receivername:{{receivername|json}}</p>
+<p>{{receiveraccountnumber}}</p>
+<p>{{amount}}</p>
+<p>{{transferfee}}</p>
+<p>{{selectedMsgCode}}</p>
+<p>{{transfertypes.transferTypeCode}}</p> -->

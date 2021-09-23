@@ -1,0 +1,36 @@
+<div class="container">
+  <div class=" mb-4">
+  <img src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg" alt="useravatar" class="avatar">
+  <h1 style="text-align: center;">{{getCustomer().accountholdername}}</h1>
+  </div>
+    <table class="table  table-hover mt-5">
+        <tbody>
+            <tr class="table">
+                <th scope="row">Customer ID</th>
+               <td>{{getCustomer().customerid}}</td>
+              </tr>
+              <tr>
+                <th scope="row">CustomerName</th>
+               <td>{{getCustomer().accountholdername}}</td>
+              </tr>
+              <tr>
+                <th scope="row">CustomerAdress</th>
+               <td>{{getCustomer().customeraddress}}</td>
+              </tr>
+              <tr>
+                <th scope="row">CustomerCity</th>
+               <td>{{getCustomer().customercity}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Overdraft enabled</th>
+               <td>{{getCustomer().overdraftflag}}</td>
+              </tr>
+              <tr>
+                <th scope="row">ClearBalance</th>
+               <td>{{getCustomer().clearbalance}}</td>
+              </tr>
+        </tbody>
+    </table>
+    <label>Do you want to transfer</label>
+    <button type="submit" class="btn btn-dark float-end" (click)="onClickTransfer()">Transfer</button>
+</div>

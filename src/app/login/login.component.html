@@ -1,0 +1,105 @@
+
+<section class="h-100 gradient-form" style="background-color: #eee;">
+    <div class="container py-3 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-xl-10">
+          <div class="card rounded-3 text-black">
+            <div class="row g-0">
+              <div class="col-lg-6">
+                <div class="card-body p-md-5 mx-md-4">
+  
+                  <div class="text-center">
+                    <img src="https://1000logos.net/wp-content/uploads/2020/04/DBS-Logo-1968.jpg" style="width: 100px;" alt="logo">
+                    <h3 class="mt-1 mb-5 pb-1">Welcome to DBS Bank</h3>
+                  </div>
+  
+                  <form action="" method="" class="row g-3" (ngSubmit)="handleLogin()">
+                    <h5 class="text-center">Please login to your account</h5>
+  
+                    <div class="form-outline mb-4">
+                        <input type="text" id="form2Example11" name="UserId" class="form-control"  placeholder="Username" [(ngModel)]="customerUser.username">
+                     
+                    </div>
+                   
+                    <div class="form-outline mb-4">
+                      <input type="password" id="form2Example22" name="password" class="form-control"  placeholder="Password" [(ngModel)]="customerUser.password">
+                 
+                    </div>
+  
+                    <div class="text-center pt-1 mb-5 pb-1">
+                      <button  class="btn btn-dark btn-block fa-lg" >Log in</button>
+                    </div>
+                  </form>
+  
+                </div>
+              </div>
+              <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+                <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                  <img class="img-fluid" src="https://freepikpsd.com/media/2019/10/dbs-logo-transparent-png-1-Transparent-Images.png">
+                  <h2 id="loginhead">Live More</h2>
+                  <h2 id="head" >Bank Less</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- <div class="container">
+    <div class="row">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="col-md-2 btn btn-primary active">
+              <input type="radio" name="customerLogin" id="customerLogin" autocomplete="off" [checked]="flag"
+               (change)="onChange(customerLogin)" #customerLogin> 
+              Customer Login
+            </label>
+            <label class="col-md-2 btn btn-primary">
+              <input type="radio" name="employeeLogin" id="employeeLogin" autocomplete="off" 
+              [checked]="!flag" (change)="onChange(employeeLogin)"
+              #employeeLogin>
+               Employee Login
+            </label>
+          </div>
+          <div class="col-md-4 offset-md-4" *ngIf="customerLogin.checked">
+            <div class="login-form bg-light mt-4 p-4">
+                <form action="" method="" class="row g-3" (ngSubmit)="handleLogin()">
+                    <h4>Customer Login</h4>
+                    <div class="col-12">
+                        <label>UserId</label>
+                        <input type="text" name="UserId" class="form-control"
+                         placeholder="Username" [(ngModel)]="customerUser.username">
+                    </div>
+                    <div class="col-12">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control"
+                         placeholder="Password" [(ngModel)]="customerUser.password">
+                    </div>
+                    <div class="col-12">
+                        <button type="submit"  class="btn btn-dark float-end">Login</button>
+                    </div>
+                 </form>
+            </div>
+        </div>
+        <div class="col-md-4 offset-md-4" *ngIf="employeeLogin.checked">
+            <div class="login-form bg-light mt-4 p-4">
+                <form action="" method="" class="row g-3">
+                    <h4>Employee Login</h4>
+                    <div class="col-12">
+                        <label>EmployeeId</label>
+                        <input type="text" name="UserId" class="form-control"
+                         placeholder="UserId" [(ngModel)]="employee.empId">
+                    </div>
+                    <div class="col-12">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control"
+                         placeholder="Password" [(ngModel)]="employee.password">
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-dark float-end">Login</button>
+                    </div>
+                 </form>
+            </div>
+        </div>
+    </div>
+ -->
